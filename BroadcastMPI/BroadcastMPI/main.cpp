@@ -33,7 +33,7 @@ int MyBroadcastSend(void *buffer, int count, MPI_Datatype datatype, int root){
 	}
 	while(lastnode<size){
 		printf("I %d send message to %d\n",rank,getRealRank(root,lastnode,size));
-		MPI_Send(buffer,count,datatype,getRealRank(root,lastnode,size),MPI_ANY_TAG,MPI_COMM_WORLD);
+		MPI_Send(buffer,count,datatype,getRealRank(root,lastnode,size),1,MPI_COMM_WORLD);
 		lastnode+=int(pow(2.0,iter++));
 	}
 	return 0;
