@@ -1,25 +1,14 @@
-﻿Сборка начата 11.11.2014 7:21:53.
-     1>Проект "C:\Users\LDYTIY\Documents\Visual Studio 2010\Projects\BroadcastMPI\BroadcastMPI\BroadcastMPI.vcxproj" в узле 2 (целевые объекты build).
+﻿Построение начато 12.11.2014 22:24:12.
+     1>Проект "C:\Users\reply\Documents\GitHub\mpi_practika\BroadcastMPI\BroadcastMPI\BroadcastMPI.vcxproj" в узле 2 (целевые объекты build).
      1>InitializeBuildStatus:
          Обращение к "Debug\BroadcastMPI.unsuccessfulbuild".
        ClCompile:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>c:\users\ldytiy\documents\visual studio 2010\projects\broadcastmpi\broadcastmpi\main.cpp(15): warning C4244: +=: преобразование "double" в "int", возможна потеря данных
-       ManifestResourceCompile:
-         Для всех выходных данных обновления не требуется.
-       Link:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\LDYTIY\Documents\Visual Studio 2010\Projects\BroadcastMPI\Debug\BroadcastMPI.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\BroadcastMPI.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\LDYTIY\Documents\Visual Studio 2010\Projects\BroadcastMPI\Debug\BroadcastMPI.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\LDYTIY\Documents\Visual Studio 2010\Projects\BroadcastMPI\Debug\BroadcastMPI.lib" /MACHINE:X86 Debug\BroadcastMPI.exe.embed.manifest.res
-         Debug\main.obj
-     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Send@24 в функции "int __cdecl MyBroadcastSend(void *,int,int,int)" (?MyBroadcastSend@@YAHPAXHHH@Z)
-     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Recv@28 в функции "int __cdecl MyBroadcastSend(void *,int,int,int)" (?MyBroadcastSend@@YAHPAXHHH@Z)
-     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Finalize@0 в функции _main
-     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Comm_size@8 в функции _main
-     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Comm_rank@8 в функции _main
-     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Init@8 в функции _main
-     1>C:\Users\LDYTIY\Documents\Visual Studio 2010\Projects\BroadcastMPI\Debug\BroadcastMPI.exe : fatal error LNK1120: 6 неразрешенных внешних элементов
-     1>Построение проекта "C:\Users\LDYTIY\Documents\Visual Studio 2010\Projects\BroadcastMPI\BroadcastMPI\BroadcastMPI.vcxproj" завершено (целевые объекты build) с ошибкой.
+     1>c:\users\reply\documents\github\mpi_practika\broadcastmpi\broadcastmpi\main.cpp(6): error C2270: getIteration: модификаторы недопустимы для функций, не являющихся членами
+     1>c:\users\reply\documents\github\mpi_practika\broadcastmpi\broadcastmpi\main.cpp(8): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+     1>Построение проекта "C:\Users\reply\Documents\GitHub\mpi_practika\BroadcastMPI\BroadcastMPI\BroadcastMPI.vcxproj" завершено (целевые объекты build) с ошибкой.
 
 СБОЙ построения.
 
-Затраченное время: 00:00:02.31
+Затраченное время: 00:00:01.46
