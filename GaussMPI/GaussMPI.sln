@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GaussMPI", "GaussMPI\GaussMPI.vcxproj", "{84C563E8-5E23-4B7A-9E5E-22A93DD96838}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84C563E8-5E23-4B7A-9E5E-22A93DD96838}.Debug|Win32.ActiveCfg = Debug|Win32
+		{84C563E8-5E23-4B7A-9E5E-22A93DD96838}.Debug|Win32.Build.0 = Debug|Win32
+		{84C563E8-5E23-4B7A-9E5E-22A93DD96838}.Release|Win32.ActiveCfg = Release|Win32
+		{84C563E8-5E23-4B7A-9E5E-22A93DD96838}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
