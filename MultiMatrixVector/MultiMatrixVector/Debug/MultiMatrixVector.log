@@ -1,0 +1,30 @@
+﻿Сборка начата 13.11.2014 17:59:03.
+     1>Проект "C:\Users\LDYTIY\Documents\GitHub\mpi_practika\MultiMatrixVector\MultiMatrixVector\MultiMatrixVector.vcxproj" в узле 2 (целевые объекты build).
+     1>PrepareForBuild:
+         Создание каталога "C:\Users\LDYTIY\Documents\GitHub\mpi_practika\MultiMatrixVector\Debug\".
+       InitializeBuildStatus:
+         Создание "Debug\MultiMatrixVector.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\ldytiy\documents\github\mpi_practika\multimatrixvector\multimatrixvector\main.cpp(51): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+     1>c:\users\ldytiy\documents\github\mpi_practika\multimatrixvector\multimatrixvector\main.cpp(62): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+       ManifestResourceCompile:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\MultiMatrixVector.exe.embed.manifest.res" Debug\MultiMatrixVector_manifest.rc 
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\LDYTIY\Documents\GitHub\mpi_practika\MultiMatrixVector\Debug\MultiMatrixVector.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\MultiMatrixVector.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\LDYTIY\Documents\GitHub\mpi_practika\MultiMatrixVector\Debug\MultiMatrixVector.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\LDYTIY\Documents\GitHub\mpi_practika\MultiMatrixVector\Debug\MultiMatrixVector.lib" /MACHINE:X86 Debug\MultiMatrixVector.exe.embed.manifest.res
+         Debug\main.obj
+     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Finalize@0 в функции _main
+     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Wtime@0 в функции _main
+     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Barrier@4 в функции _main
+     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Recv@28 в функции _main
+     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Send@24 в функции _main
+     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Comm_size@8 в функции _main
+     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Comm_rank@8 в функции _main
+     1>main.obj : error LNK2019: ссылка на неразрешенный внешний символ _MPI_Init@8 в функции _main
+     1>C:\Users\LDYTIY\Documents\GitHub\mpi_practika\MultiMatrixVector\Debug\MultiMatrixVector.exe : fatal error LNK1120: 8 неразрешенных внешних элементов
+     1>Построение проекта "C:\Users\LDYTIY\Documents\GitHub\mpi_practika\MultiMatrixVector\MultiMatrixVector\MultiMatrixVector.vcxproj" завершено (целевые объекты build) с ошибкой.
+
+СБОЙ построения.
+
+Затраченное время: 00:00:12.03
