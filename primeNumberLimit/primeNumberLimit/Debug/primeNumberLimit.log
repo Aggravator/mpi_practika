@@ -1,0 +1,26 @@
+﻿Сборка начата 15.11.2014 1:14:57.
+     1>Проект "C:\Users\LDYTIY\Documents\GitHub\mpi_practika\primeNumberLimit\primeNumberLimit\primeNumberLimit.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\primeNumberLimit.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+       ManifestResourceCompile:
+         Для всех выходных данных обновления не требуется.
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\LDYTIY\Documents\GitHub\mpi_practika\primeNumberLimit\Debug\primeNumberLimit.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\primeNumberLimit.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\LDYTIY\Documents\GitHub\mpi_practika\primeNumberLimit\Debug\primeNumberLimit.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\LDYTIY\Documents\GitHub\mpi_practika\primeNumberLimit\Debug\primeNumberLimit.lib" /MACHINE:X86 Debug\primeNumberLimit.exe.embed.manifest.res
+         Debug\main.obj
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\primeNumberLimit.exe.embed.manifest" /manifest Debug\primeNumberLimit.exe.intermediate.manifest
+         Для всех выходных данных обновления не требуется.
+       LinkEmbedManifest:
+         Для всех выходных данных обновления не требуется.
+         primeNumberLimit.vcxproj -> C:\Users\LDYTIY\Documents\GitHub\mpi_practika\primeNumberLimit\Debug\primeNumberLimit.exe
+       FinalizeBuildStatus:
+         Файл "Debug\primeNumberLimit.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\primeNumberLimit.lastbuildstate".
+     1>Построение проекта "C:\Users\LDYTIY\Documents\GitHub\mpi_practika\primeNumberLimit\primeNumberLimit\primeNumberLimit.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:03.73
