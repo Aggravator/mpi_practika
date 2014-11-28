@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-
 double fRand(double fMin, double fMax)
 {
     double f = (double)rand() / RAND_MAX;

@@ -34,10 +34,11 @@ int main(int argc, char *argv[]){
 	MPI_Status status;
 	double start,end;
 	int i,j,ij,activeNodeCount;
-	int n,numCount;
+	int n,numCount,primaryCount=0;
 	MPI_Init(&argc, &argv);
 	MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 	MPI_Comm_size(MPI_COMM_WORLD,&size);
+	if(rank==0)start=MPI_Wtime();
 	if(argc<2){
 		int start;
 		bool *nums=new bool[partSize];
@@ -45,17 +46,24 @@ int main(int argc, char *argv[]){
 			start=i*partSize*size+rank*partSize;
 			getPrimeNums(nums,start,partSize);
 			if(rank==0){
-				for(int j=0;j<partSize;++j)if(nums[j]==1)printf("%ld ",start+j);
+				for(int j=0;j<partSize;++j)
+					if(nums[j]==1){
+						++primaryCount;
+						printf("%ld ",start+j);
+					}
 				printf("\n");
 				for(int j=1;j<size;++j){
 					MPI_Recv(nums,partSize,MPI_CHAR,j,0,MPI_COMM_WORLD,&status);
 					start=i*partSize*size+j*partSize;
-					for(int ij=0;ij<partSize;++ij)if(nums[ij]==1)printf("%ld ",start+ij);
+					for(int ij=0;ij<partSize;++ij)
+						if(nums[ij]==1){
+							++primaryCount;
+							printf("%ld ",start+ij);
+						}
 					printf("\n");
 				}
 				fflush(stdout);
 			}else MPI_Send(nums,partSize,MPI_CHAR,0,0,MPI_COMM_WORLD);
-			//MPI_Barrier(MPI_COMM_WORLD);
 		}
 	}else{
 		n=atoi(argv[1]);
@@ -66,7 +74,11 @@ int main(int argc, char *argv[]){
 			bool *nums=new bool[numCount];
 			getPrimeNums(nums,firstNum,numCount);
 			if(rank==0){
-				for(int i=0;i<numCount;++i)if(nums[i]==1)printf("%ld ",i);
+				for(int i=0;i<numCount;++i)
+					if(nums[i]==1){
+						++primaryCount;
+						printf("%ld ",i);
+					}
 				printf("\n");
 				int temp;
 				int shift;
@@ -74,12 +86,20 @@ int main(int argc, char *argv[]){
 					temp=numCountForNode(i,n,activeNodeCount);
 					MPI_Recv(nums,temp,MPI_CHAR,i,0,MPI_COMM_WORLD,&status);
 					shift=getFirstNum(i,n,size);
-					for(int j=0;j<temp;++j)if(nums[j]==1)printf("%ld ",shift+j);
+					for(int j=0;j<temp;++j)if(nums[j]==1){
+						++primaryCount;
+						printf("%ld ",shift+j);
+					}
 					printf("\n");
 				}
 			}else MPI_Send(nums,numCount,MPI_CHAR,0,0,MPI_COMM_WORLD);
 			delete[] nums;
 		}
+	}
+	if(rank==0){
+		end=MPI_Wtime();
+		printf("\ntime =%lf\n",end-start);
+		printf("primary number count=%d",primaryCount);
 	}
 	MPI_Finalize();
 }
