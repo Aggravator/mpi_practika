@@ -40,7 +40,7 @@ bool isInteger(const double d,int &i){
 	return false;
 }
 int main(int argc, char *argv[]){
-	MPI_Init(&argc, &argv);
+MPI_Init(&argc, &argv);
 	MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 	MPI_Comm_size(MPI_COMM_WORLD,&size);
 	MPI_Comm torus;
@@ -54,13 +54,12 @@ int main(int argc, char *argv[]){
 		double start,end;
 		{
 			int dims[]={cartSize,cartSize};
-			int periods[]={true,false};
+			int periods[]={true,true};
 			MPI_Cart_create(MPI_COMM_WORLD,2,dims,periods,true,&torus);
 		}
 		double *as=new double[blockSize*blockSize];//исходный блок из массива a
 		double *bs=new double[blockSize*blockSize];//исходный блок из массива b
-		double *at=new double[blockSize*blockSize];//переданный блок из массива a
-		double *bt=new double[blockSize*blockSize];//переданный блок из массива b
+		double *t=new double[blockSize*blockSize];//переданный блок
 		double *c=new double[blockSize*blockSize];//блок исходной матрицы
 		memset(c,0,sizeof(double)*blockSize*blockSize);
 		//Создание декартовой топологии и первичная инициализация
@@ -72,25 +71,30 @@ int main(int argc, char *argv[]){
 		}
 		if(coords[0]==0 && coords[1]==0){
 			int tcoords[]={0,1};
-			int trank;
-			for(tcoords[0]=0;tcoords[0]<cartSize;++tcoords[0]){
-				for(tcoords[1];tcoords[1]<cartSize;++tcoords[1]){
+			int trank,j=1;
+			for(int i=0;i<cartSize;++i){
+				for(j;j<cartSize;++j){
 					for(int ij=0;ij<blockSize*blockSize;++ij){
-						at[ij]=fRand(-100000,100000);
-						bt[ij]=fRand(-100000,100000);
+						as[ij]=fRand(-100000,100000);
+						bs[ij]=fRand(-100000,100000);
 					}
+					tcoords[0]=i;tcoords[1]=j;
+					if(i!=0)tcoords[1]-=i;
 					MPI_Cart_rank(torus,tcoords,&trank);
-					MPI_Isend(at,blockSize*blockSize,MPI_DOUBLE,trank,1,torus,&request);
-					MPI_Send(bt,blockSize*blockSize,MPI_DOUBLE,trank,2,torus);
+					MPI_Send(as,blockSize*blockSize,MPI_DOUBLE,trank,1,torus);
+					tcoords[1]=j;
+					if(j!=0)tcoords[0]-=j;
+					MPI_Cart_rank(torus,tcoords,&trank);
+					MPI_Send(bs,blockSize*blockSize,MPI_DOUBLE,trank,2,torus);
 				}
-				tcoords[1]=0;
+				j=0;
 			}
 			for(int ij=0;ij<blockSize*blockSize;++ij){
 				as[ij]=fRand(-100000,100000);
 				bs[ij]=fRand(-100000,100000);
 			}
 		}else{
-			MPI_Recv(as,blockSize*blockSize,MPI_DOUBLE,MPI_ANY_SOURCE,1,torus,&status);
+			MPI_Irecv(as,blockSize*blockSize,MPI_DOUBLE,MPI_ANY_SOURCE,1,torus,&request);
 			MPI_Recv(bs,blockSize*blockSize,MPI_DOUBLE,MPI_ANY_SOURCE,2,torus,&status);
 			zzrank=status.MPI_SOURCE;
 		}
@@ -99,30 +103,25 @@ int main(int argc, char *argv[]){
 		if(coords[0]==0 && coords[1]==0) start=MPI_Wtime();
 		int tcoords[]={0,0};
 		int trank;
-		for(int i=0;i<cartSize;++i){
-			if(coords[1]==(coords[0]+i)%cartSize){
-				tcoords[0]=coords[0];
-				for(int j=0;j<cartSize;++j){
-					if(j==coords[1])continue;
-					tcoords[1]=j;
-					MPI_Cart_rank(torus,tcoords,&trank);
-					MPI_Isend(as,blockSize*blockSize,MPI_DOUBLE,trank,3,torus,&request);
-				}
-				memcpy(at,as,blockSize*blockSize*sizeof(double));
-			}else{
-				MPI_Recv(at,blockSize*blockSize,MPI_DOUBLE,MPI_ANY_SOURCE,3,torus,&status);
-			}
-			if(i==0){
-				memcpy(bt,bs,blockSize*blockSize*sizeof(double));
-			}else{
-				tcoords[0]=coords[0]-1;
-				tcoords[1]=coords[1];
-				MPI_Cart_rank(torus,tcoords,&trank);
-				MPI_Isend(bs,blockSize*blockSize,MPI_DOUBLE,trank,4,torus,&request);
-				MPI_Recv(bt,blockSize*blockSize,MPI_DOUBLE,MPI_ANY_SOURCE,4,torus,&status);
-			}
-			Multi(at,bt,at,blockSize);
-			Sum(c,at,c,blockSize);
+		Multi(as,bs,t,blockSize);
+		Sum(c,t,c,blockSize);
+		for(int i=0;i<cartSize-1;++i){
+			tcoords[0]=coords[0];
+			tcoords[1]=coords[1]-1;
+			MPI_Cart_rank(torus,tcoords,&trank);
+			MPI_Isend(as,blockSize*blockSize,MPI_DOUBLE,trank,3,torus,&request);
+			MPI_Recv(t,blockSize*blockSize,MPI_DOUBLE,MPI_ANY_SOURCE,3,torus,&status);
+			MPI_Wait(&request,&status);
+			memcpy(as,t,blockSize*blockSize*sizeof(double));
+			tcoords[0]=coords[0]-1;
+			tcoords[1]=coords[1];
+			MPI_Cart_rank(torus,tcoords,&trank);
+			MPI_Isend(bs,blockSize*blockSize,MPI_DOUBLE,trank,4,torus,&request);
+			MPI_Recv(t,blockSize*blockSize,MPI_DOUBLE,MPI_ANY_SOURCE,4,torus,&status);
+			MPI_Wait(&request,&status);
+			memcpy(bs,t,blockSize*blockSize*sizeof(double));
+			Multi(as,bs,t,blockSize);
+			Sum(c,t,c,blockSize);
 		}
 		//Сбор и вывод блоков результирующей матрицы
 		if(coords[0]==0 && coords[1]==0){
@@ -146,8 +145,7 @@ int main(int argc, char *argv[]){
 		}
 		delete[] as;
 		delete[] bs;
-		delete[] at;
-		delete[] bt;
+		delete[] t;
 		delete[] c;
 	}else if(rank==0){
 		printf("Size is incorrect!");
