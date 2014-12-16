@@ -42,11 +42,7 @@ void ghostShare(MPI_Comm torus,char** lay,char *lc,char *rc,int coords[2],int bS
 	static char *temp=new char[bS];
 	MPI_Status status;
 	MPI_Request request;
-	/*tcoords[1]=coords[1]-1;
-	MPI_Cart_rank(torus,tcoords,&trank);
-	if(coords[1]%2==0)MPI_Sendrecv(lc,bS,MPI_CHAR,trank,5,temp,bS,MPI_CHAR,trank,6,torus,&status);
-	else MPI_Sendrecv(rc,bS,MPI_CHAR,trank,6,temp,bS,MPI_CHAR,trank,5,torus,&status);
-	for(int i=0;i<bS;++i)lay[i][bS+1]=temp[i];*/
+	
 	tcoords[1]=coords[1]-1;
 	MPI_Cart_rank(torus,tcoords,&trank);
 	MPI_Isend(lc,bS,MPI_CHAR,trank,5,torus,&request);
@@ -63,23 +59,20 @@ void ghostShare(MPI_Comm torus,char** lay,char *lc,char *rc,int coords[2],int bS
 
 	tcoords[1]=coords[1];
 	tcoords[0]=coords[0]-1;
-	printf("%d\n",lay[0][0]);
 	MPI_Cart_rank(torus,tcoords,&trank);
-	MPI_Isend(lay[0],bS+2,MPI_CHAR,trank,7,torus,&request);
-	printf("bot gostsent!");
-	fflush(stdout);
-	MPI_Recv(lay[bS+2],bS+2,MPI_CHAR,MPI_ANY_SOURCE,7,torus,&status);
+	MPI_Isend(lay[1],bS+2,MPI_CHAR,trank,7,torus,&request);
+	MPI_Recv(lay[bS+1],bS+2,MPI_CHAR,MPI_ANY_SOURCE,7,torus,&status);
 	MPI_Wait(&request,&status);
-	printf("bot gostsent!");
-	fflush(stdout);
 
 	tcoords[0]=coords[0]+1;
 	MPI_Cart_rank(torus,tcoords,&trank);
-	MPI_Isend(lay[bS+1],bS+2,MPI_CHAR,trank,8,torus,&request);
+	MPI_Isend(lay[bS],bS+2,MPI_CHAR,trank,8,torus,&request);
 	MPI_Recv(lay[0],bS+2,MPI_CHAR,MPI_ANY_SOURCE,8,torus,&status);
 	MPI_Wait(&request,&status);
-	printf("top gostsent!");
-	fflush(stdout);
+	if(coords[0]==0 && coords[1]==0)lay[0][0]=0;
+	if(coords[0]==cS-1 && coords[1]==cS-1)lay[bS+1][bS+1]=0;
+	if(coords[0]==0 && coords[1]==cS-1)lay[0][bS+1]=0;
+	if(coords[0]==cS && coords[1]==0)lay[bS+1][0]=0;
 }
 void makeStep(char **lay1,char **lay2,char *lc,char *rc,int bS){
 	char sum;
@@ -88,9 +81,10 @@ void makeStep(char **lay1,char **lay2,char *lc,char *rc,int bS){
 			sum=lay1[i-1][j-1]+lay1[i-1][j]+lay1[i-1][j+1]+lay1[i][j-1]+lay1[i][j+1]+lay1[i+1][j-1]+lay1[i+1][j]+lay1[i+1][j+1];
 			if(sum==3)lay2[i][j]=1;
 			else if(sum>3 || sum<2)lay2[i][j]=0;
+			else if(sum==2)lay2[i][j]=lay1[i][j];
 		}
-		lc[i-1]=lay1[i][1];
-		rc[i-1]=lay1[i][bS];
+		lc[i-1]=lay2[i][1];
+		rc[i-1]=lay2[i][bS];
 	}
 }
 int logChanges(char **lay1,char **lay2,int bS,int coords[2],int iter){
@@ -99,14 +93,21 @@ int logChanges(char **lay1,char **lay2,int bS,int coords[2],int iter){
 		for(int j=1;j<bS+1;++j){
 			if(lay1[i][j]!=lay2[i][j]){
 				res=1;
-				printf("i=%d p=%d;%d c=%d;%d\n",iter,coords[0],coords[1],i-1,j-1);
+				//printf("i=%d p=%d;%d c=%d;%d\n",iter,coords[0],coords[1],i-1,j-1);
 			}
 		}
 	}
 	return res;
 }
+int ppL(char **lay,int size){
+	for(int i=1;i<size+1;++i){
+		for(int j=1;j<size+1;++j)printf("%d ",lay[i][j]);
+		printf("\n");
+	}
+}
 int main(int argc, char *argv[]){
 	int size, rank;
+	double start,end;
 	MPI_Init(&argc, &argv);
 	MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 	MPI_Comm_size(MPI_COMM_WORLD,&size);
@@ -139,22 +140,29 @@ int main(int argc, char *argv[]){
 		lay2=new char* [blockSize+2];
 		for(int i=0;i<blockSize+2;++i){
 			lay1[i]=new char[blockSize+2];
-			memset(lay1,0,blockSize+2);
-			printf("%d",lay1[0][0]);
 			lay2[i]=new char[blockSize+2];
-			memset(lay2,0,blockSize+2);
 		}
-		
 		char *block=new char[blockSize*blockSize];
 		if(coords[0]==0 && coords[1]==0){
-			generateBlock(block,blockSize);
+			//generateBlock(block,blockSize);
+			for(int i=0;i<blockSize*blockSize;++i)block[i]=0;
 			printf("\np=%d;%d\n",coords[0],coords[1]);
 			printBlock(block,blockSize);
 			blockToLay(block,lay1,leftC,rightC,blockSize);
 			tcoords[1]=1;
 			for(tcoords[0]=0;tcoords[0]<cartSize;++tcoords[0]){
 				for(tcoords[1];tcoords[1]<cartSize;++tcoords[1]){
-					generateBlock(block,blockSize);
+					//generateBlock(block,blockSize);
+					for(int i=0;i<blockSize*blockSize;++i)block[i]=0;
+					if(tcoords[0]==0 && tcoords[1]==1){
+						block[9]=1;
+					}
+					if(tcoords[1]==0 && tcoords[0]==1){
+						block[4]=1;block[5]=1;
+					}
+					if(tcoords[0]==1 && tcoords[1]==1){
+						block[0]=1;block[3]=1;
+					}
 					printf("\np=%d;%d\n",tcoords[0],tcoords[1]);
 					printBlock(block,blockSize);
 					MPI_Cart_rank(torus,tcoords,&trank);
@@ -168,13 +176,31 @@ int main(int argc, char *argv[]){
 		}
 		delete []block;
 		ghostShare(torus,lay1,leftC,rightC,coords,blockSize,cartSize);
-		printf("\nI=%d;%d\n",coords[0],coords[1]);
-		fflush(stdout);
 		MPI_Barrier(torus);
-		//Start
+		if(coords[0]==0 && coords[1]==0)start=MPI_Wtime();
 		long iter;
 		int changes;
-		for(iter=0;iter<10000000;++iter){
+		if(coords[0]==0 && coords[1]==0){
+			char *table=new char[matrixSize*matrixSize];
+			for(int i=1;i<blockSize+1;++i)memcpy(table+(i-1)*blockSize,lay1[i]+1,blockSize);
+			for(int i=1;i<4;++i){
+				MPI_Recv(table+matrixSize*(i),matrixSize,MPI_CHAR,MPI_ANY_SOURCE,i,torus,&status);
+			}
+			for(int i=0;i<matrixSize;++i){
+				for(int j=0;j<matrixSize;++j){
+					printf("%d ",table[matrixSize*i+j]);
+				}
+				printf("\n");
+			}
+		}else{
+			char *tr=new char[blockSize*blockSize];
+			for(int i=1;i<blockSize+1;++i)memcpy(tr+(i-1)*blockSize,lay1[i]+1,blockSize);
+			tcoords[0]=0;tcoords[1]=0;
+			::MPI_Cart_rank(torus,tcoords,&trank);
+			MPI_Send(tr,blockSize*blockSize,MPI_CHAR,trank,coords[0]*2+coords[1]*1,torus);
+		}
+		
+		for(iter=0;iter<5;++iter){
 			if(iter%2==0){
 				makeStep(lay1,lay2,leftC,rightC,blockSize);
 			}else{
@@ -187,6 +213,10 @@ int main(int argc, char *argv[]){
 				if(iter%2==0)ghostShare(torus,lay2,leftC,rightC,coords,blockSize,cartSize);
 				else ghostShare(torus,lay1,leftC,rightC,coords,blockSize,cartSize);
 			}
+		}
+		if(coords[0]==0 && coords[1]==0){
+			end=MPI_Wtime();
+			printf("time:%lf",end-start);
 		}
 		delete[] leftC;
 		delete[] rightC;

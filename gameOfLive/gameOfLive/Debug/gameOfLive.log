@@ -1,0 +1,15 @@
+﻿Сборка начата 12.12.2014 3:38:43.
+     1>Проект "C:\Users\LDYTIY\Documents\GitHub\mpi_practika\gameOfLive\gameOfLive\gameOfLive.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Обращение к "Debug\gameOfLive.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\ldytiy\documents\github\mpi_practika\gameoflive\gameoflive\main.cpp(13): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+     1>c:\users\ldytiy\documents\github\mpi_practika\gameoflive\gameoflive\main.cpp(119): warning C4101: request: неиспользованная локальная переменная
+     1>c:\users\ldytiy\documents\github\mpi_practika\gameoflive\gameoflive\main.cpp(106): error C4716: ppL: должна возвращать значение
+     1>Построение проекта "C:\Users\LDYTIY\Documents\GitHub\mpi_practika\gameOfLive\gameOfLive\gameOfLive.vcxproj" завершено (целевые объекты build) с ошибкой.
+
+СБОЙ построения.
+
+Затраченное время: 00:00:06.22

@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
-const double EPS=0.00000001;
 int size, rank;
 double fRand(double fMin, double fMax){
     double f = (double)rand() / RAND_MAX;
@@ -33,6 +32,7 @@ void printBlockRow(double *a,int size,int blockC){
 	}
 }
 bool isInteger(const double d,int &i){
+	const static double EPS=0.00000001;
 	if(fabs(ceil(d)-d)<EPS){
 		i=ceil(d);
 		return true;
