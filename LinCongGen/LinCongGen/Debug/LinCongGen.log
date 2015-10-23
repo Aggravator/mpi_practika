@@ -1,0 +1,17 @@
+﻿Сборка начата 05.06.2015 19:35:57.
+     1>Проект "c:\Users\aggravator\documents\visual studio 2013\Projects\LinCongGen\LinCongGen\LinCongGen.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /openmp /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\aggravator\documents\visual studio 2013\projects\linconggen\linconggen\main.cpp(8): warning C4005: RAND_MAX: изменение макроопределения
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(154): см. предыдущее определение "RAND_MAX"
+     1>c:\users\aggravator\documents\visual studio 2013\projects\linconggen\linconggen\main.cpp(24): warning C4101: j: неиспользованная локальная переменная
+     1>c:\users\aggravator\documents\visual studio 2013\projects\linconggen\linconggen\main.cpp(73): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"c:\users\aggravator\documents\visual studio 2013\Projects\LinCongGen\Debug\LinCongGen.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"c:\users\aggravator\documents\visual studio 2013\Projects\LinCongGen\Debug\LinCongGen.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"c:\users\aggravator\documents\visual studio 2013\Projects\LinCongGen\Debug\LinCongGen.lib" /MACHINE:X86 Debug\main.obj
+         LinCongGen.vcxproj -> c:\users\aggravator\documents\visual studio 2013\Projects\LinCongGen\Debug\LinCongGen.exe
+     1>Сборка проекта "c:\Users\aggravator\documents\visual studio 2013\Projects\LinCongGen\LinCongGen\LinCongGen.vcxproj" завершена (целевые объекты Build).
+
+Сборка успешно завершена.
+
+Затраченное время: 00:00:02.21
